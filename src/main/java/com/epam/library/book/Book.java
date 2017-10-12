@@ -1,9 +1,8 @@
 package com.epam.library.book;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.epam.library.borrow.Borrow;
+
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -15,6 +14,9 @@ public class Book {
     private String title;
 
     private String author;
+
+    @OneToOne(mappedBy = "book")
+    private Borrow borrow;
 
     public long getId() {
         return id;
@@ -40,25 +42,12 @@ public class Book {
         this.author = author;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Book book = (Book) o;
-
-        if (id != book.id) return false;
-        if (!title.equals(book.title)) return false;
-        return author.equals(book.author);
-
+    public Borrow getBorrow() {
+        return borrow;
     }
 
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + title.hashCode();
-        result = 31 * result + author.hashCode();
-        return result;
+    public void setBorrow(Borrow borrow) {
+        this.borrow = borrow;
     }
 
     @Override
@@ -67,6 +56,8 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", borrow=" + borrow +
                 '}';
     }
 }
+

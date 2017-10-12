@@ -3,10 +3,7 @@ package com.epam.library.borrow;
 import com.epam.library.book.Book;
 import com.epam.library.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,8 +13,10 @@ public class Borrow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @OneToOne
     private Book book;
 
+    @ManyToOne
     private User user;
 
     private LocalDateTime expiration;
@@ -62,31 +61,6 @@ public class Borrow {
 
     public void setExtended(Boolean extended) {
         isExtended = extended;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Borrow borrow = (Borrow) o;
-
-        if (id != borrow.id) return false;
-        if (!book.equals(borrow.book)) return false;
-        if (!user.equals(borrow.user)) return false;
-        if (!expiration.equals(borrow.expiration)) return false;
-        return isExtended.equals(borrow.isExtended);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + book.hashCode();
-        result = 31 * result + user.hashCode();
-        result = 31 * result + expiration.hashCode();
-        result = 31 * result + isExtended.hashCode();
-        return result;
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.epam.library.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.epam.library.borrow.Borrow;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -15,6 +15,9 @@ public class User {
     private String username;
 
     private String name;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Borrow> borrows;
 
     private Boolean isLibrarian;
 
@@ -42,6 +45,14 @@ public class User {
         this.name = name;
     }
 
+    public Set<Borrow> getBorrows() {
+        return borrows;
+    }
+
+    public void setBorrows(Set<Borrow> borrows) {
+        this.borrows = borrows;
+    }
+
     public Boolean getLibrarian() {
         return isLibrarian;
     }
@@ -51,34 +62,12 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (!username.equals(user.username)) return false;
-        if (!name.equals(user.name)) return false;
-        return isLibrarian.equals(user.isLibrarian);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + username.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + isLibrarian.hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
+                ", borrows=" + borrows +
                 ", isLibrarian=" + isLibrarian +
                 '}';
     }
