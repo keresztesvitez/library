@@ -18,6 +18,14 @@ public class Book {
     @OneToOne(mappedBy = "book")
     private Borrow borrow;
 
+    public Book() {
+    }
+
+    public Book(String author, String title) {
+        this.author = author;
+        this.title = title;
+    }
+
     public long getId() {
         return id;
     }

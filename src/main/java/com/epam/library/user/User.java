@@ -21,6 +21,15 @@ public class User {
 
     private Boolean isLibrarian;
 
+    public User() {
+    }
+
+    public User(String username, String name, Boolean isLibrarian) {
+        this.username = username;
+        this.name = name;
+        this.isLibrarian = isLibrarian;
+    }
+
     public long getId() {
         return id;
     }
