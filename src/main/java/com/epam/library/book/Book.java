@@ -1,6 +1,7 @@
 package com.epam.library.book;
 
 import com.epam.library.borrow.Borrow;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -50,6 +51,7 @@ public class Book {
         this.author = author;
     }
 
+    @JsonIgnore
     public Borrow getBorrow() {
         return borrow;
     }

@@ -25,6 +25,11 @@ public class BookController {
         return bookService.borrow(request.getBookId(), request.getUserId());
     }
 
+    @RequestMapping(value = "/extend", method = RequestMethod.POST)
+    public Borrow extend(@RequestBody BorrowRequest request) {
+        return bookService.extend(request.getBookId(), request.getUserId());
+    }
+
 
 
 }

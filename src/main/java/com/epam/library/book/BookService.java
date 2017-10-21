@@ -40,6 +40,30 @@ public class BookService {
         return borrowBook(book, user);
     }
 
+    //TODO Create REST Exception handling
+    public Borrow extend(Long bookId, Long userId) {
+        Book book = bookRepository.findById(bookId);
+        if (book.getBorrow() == null) {
+            throw new RuntimeException("You can not extend the borrow expiration because the book is not borrowed");
+        }
+        if (book.getBorrow() != null && book.getBorrow().getUser().getId() != userId) {
+            throw new RuntimeException("You can not extend the borrow expiration because the book is not borrowed by you");
+        }
+        if (book.getBorrow().getExtended()) {
+            throw new RuntimeException("You can not extend the borrow expiration because you had already extended it");
+        }
+        return extendExpirationDate(book);
+    }
+
+    private Borrow extendExpirationDate (Book book) {
+        Borrow borrow = book.getBorrow();
+        borrow.setExtended(true);
+        borrow.setExpiration(borrow.getExpiration().plusDays(BORROW_DAYS));
+
+        borrowRepository.save(borrow);
+        return borrow;
+    }
+
     private Borrow borrowBook(Book book, User user) {
         Borrow borrow = new Borrow();
         borrow.setBook(book);
@@ -48,9 +72,9 @@ public class BookService {
         borrow.setExpiration(LocalDate.now().plusDays(BORROW_DAYS));
 
         borrowRepository.save(borrow);
-
         return borrow;
     }
+
 
 
 }
