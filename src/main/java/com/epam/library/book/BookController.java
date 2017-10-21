@@ -3,10 +3,9 @@ package com.epam.library.book;
 import com.epam.library.borrow.Borrow;
 import com.epam.library.borrow.BorrowRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/bookService")
@@ -28,6 +27,11 @@ public class BookController {
     @RequestMapping(value = "/extend", method = RequestMethod.POST)
     public Borrow extend(@RequestBody BorrowRequest request) {
         return bookService.extend(request.getBookId(), request.getUserId());
+    }
+
+    @RequestMapping(value = "/borrows/{userId}", method = RequestMethod.GET)
+    public Page<Borrow> getBorrowsByUserId(@PathVariable("userId") Long userId, Pageable pageable) {
+        return bookService.getBorrowsByUserId(userId, pageable);
     }
 
 

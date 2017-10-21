@@ -7,6 +7,8 @@ import com.epam.library.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -53,6 +55,12 @@ public class BookService {
             throw new RuntimeException("You can not extend the borrow expiration because you had already extended it");
         }
         return extendExpirationDate(book);
+    }
+
+    public Page<Borrow> getBorrowsByUserId (Long userId, Pageable pageable) {
+        User user = userRepository.findById(userId);
+        Page<Borrow> borrows = borrowRepository.findByUser(user, pageable);
+        return borrows;
     }
 
     private Borrow extendExpirationDate (Book book) {
