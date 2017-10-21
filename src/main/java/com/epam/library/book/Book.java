@@ -1,9 +1,11 @@
 package com.epam.library.book;
 
 import com.epam.library.borrow.Borrow;
+import com.epam.library.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -18,6 +20,8 @@ public class Book {
 
     @OneToOne(mappedBy = "book")
     private Borrow borrow;
+
+    private List<User> subscribers;
 
     public Book() {
     }
@@ -60,5 +64,12 @@ public class Book {
         this.borrow = borrow;
     }
 
+    public List<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<User> subscribers) {
+        this.subscribers = subscribers;
+    }
 }
 

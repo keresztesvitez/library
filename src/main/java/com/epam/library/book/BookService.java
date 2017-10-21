@@ -2,6 +2,7 @@ package com.epam.library.book;
 
 import com.epam.library.borrow.Borrow;
 import com.epam.library.borrow.BorrowRepository;
+import com.epam.library.borrow.BorrowRequest;
 import com.epam.library.user.User;
 import com.epam.library.user.UserRepository;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class BookService {
@@ -63,7 +65,34 @@ public class BookService {
         return borrows;
     }
 
-    private Borrow extendExpirationDate (Book book) {
+    public Boolean deleteBorrow(BorrowRequest request) {
+        Book book = bookRepository.findById(request.getBookId());
+        Borrow borrow = borrowRepository.findByBook(book);
+
+        sendEmailToSubscribers(borrow.getBook().getSubscribers());
+
+        borrowRepository.delete(borrow);
+
+        return Boolean.TRUE;
+    }
+
+    public Boolean subscribe(BorrowRequest request) {
+
+        Book book = bookRepository.findById(request.getBookId());
+
+
+        return Boolean.TRUE;
+    }
+
+    private void sendEmailToSubscribers(List<User> subscribers) {
+        subscribers.stream().map(User::getEmail).forEach(this::sendEmail);
+    }
+
+    private void sendEmail(String email) {
+        logger.info("Send email to: {}", email);
+    }
+
+    private Borrow extendExpirationDate(Book book) {
         Borrow borrow = book.getBorrow();
         borrow.setExtended(true);
         borrow.setExpiration(borrow.getExpiration().plusDays(BORROW_DAYS));

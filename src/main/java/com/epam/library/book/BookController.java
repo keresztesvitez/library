@@ -34,6 +34,10 @@ public class BookController {
         return bookService.getBorrowsByUserId(userId, pageable);
     }
 
+    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+    public Boolean bookReturned(@RequestBody BorrowRequest request) {
+        return bookService.deleteBorrow(request);
+    }
 
 
 }
