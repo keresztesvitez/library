@@ -70,14 +70,4 @@ public class User {
         isLibrarian = librarian;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", name='" + name + '\'' +
-                ", borrows=" + borrows +
-                ", isLibrarian=" + isLibrarian +
-                '}';
-    }
 }

@@ -9,7 +9,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String title;
 
@@ -26,11 +26,11 @@ public class Book {
         this.title = title;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,14 +58,5 @@ public class Book {
         this.borrow = borrow;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", borrow=" + borrow +
-                '}';
-    }
 }
 

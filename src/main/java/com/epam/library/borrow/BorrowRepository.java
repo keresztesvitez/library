@@ -5,4 +5,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "borrows", path = "borrows")
 public interface BorrowRepository extends PagingAndSortingRepository<Borrow, Long> {
+
+    Borrow findByBook(Long bookId);
 }

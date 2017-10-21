@@ -15,4 +15,6 @@ public interface BookRepository extends PagingAndSortingRepository<Book, Long> {
 
     @RestResource(path = "byAuthor", rel = "byAuthor")
     Page<Book> findBookByAuthorIgnoreCaseContaining(@Param("author") String author, Pageable pageable);
+
+    Book findById(Long id);
 }

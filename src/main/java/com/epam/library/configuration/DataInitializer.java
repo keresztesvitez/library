@@ -2,6 +2,8 @@ package com.epam.library.configuration;
 
 import com.epam.library.book.Book;
 import com.epam.library.book.BookRepository;
+import com.epam.library.borrow.Borrow;
+import com.epam.library.borrow.BorrowRepository;
 import com.epam.library.user.User;
 import com.epam.library.user.UserRepository;
 import org.slf4j.Logger;
@@ -9,18 +11,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class DataInitializer {
 
+    private static final int BORROW_DAYS = 30;
     private BookRepository bookRepository;
     private UserRepository userRepository;
+    private BorrowRepository borrowRepository;
 
     private Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
     @Autowired
-    public DataInitializer(BookRepository bookRepository, UserRepository userRepository) {
+    public DataInitializer(BookRepository bookRepository, UserRepository userRepository, BorrowRepository borrowRepository) {
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
+        this.borrowRepository = borrowRepository;
 
         initRepos();
     }
@@ -28,6 +35,20 @@ public class DataInitializer {
     private void initRepos() {
         initBooks();
         initUsers();
+        initBorrows();
+    }
+
+    private void initBorrows() {
+        Book book = this.bookRepository.findById(1L);
+        User user = this.userRepository.findById(2L);
+
+        Borrow borrow = new Borrow();
+        borrow.setBook(book);
+        borrow.setUser(user);
+        borrow.setExtended(false);
+        borrow.setExpiration(LocalDate.now().plusDays(BORROW_DAYS));
+
+        this.borrowRepository.save(borrow);
     }
 
     private void initUsers() {

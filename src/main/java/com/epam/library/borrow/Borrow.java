@@ -2,9 +2,15 @@ package com.epam.library.borrow;
 
 import com.epam.library.book.Book;
 import com.epam.library.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Borrow {
@@ -19,7 +25,10 @@ public class Borrow {
     @ManyToOne
     private User user;
 
-    private LocalDateTime expiration;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate expiration;
 
     private Boolean isExtended;
 
@@ -39,19 +48,24 @@ public class Borrow {
         this.book = book;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
+    }
+
+    public Long getUserId() {
+        return user.getId();
     }
 
     public void setUser(User user) {
         this.user = user;
     }
 
-    public LocalDateTime getExpiration() {
+    public LocalDate getExpiration() {
         return expiration;
     }
 
-    public void setExpiration(LocalDateTime expiration) {
+    public void setExpiration(LocalDate expiration) {
         this.expiration = expiration;
     }
 
@@ -63,14 +77,4 @@ public class Borrow {
         isExtended = extended;
     }
 
-    @Override
-    public String toString() {
-        return "Borrow{" +
-                "id=" + id +
-                ", book=" + book +
-                ", user=" + user +
-                ", expiration=" + expiration +
-                ", isExtended=" + isExtended +
-                '}';
-    }
 }
