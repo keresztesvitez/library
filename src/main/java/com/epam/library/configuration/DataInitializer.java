@@ -52,9 +52,9 @@ public class DataInitializer {
     }
 
     private void initUsers() {
-        this.userRepository.save(new User("admin", "Larry Librarian", true));
-        this.userRepository.save(new User("john", "John Doe", false));
-        this.userRepository.save(new User("jane", "Jane Doe", false));
+        this.userRepository.save(new User("admin", "Larry Librarian", "admin@example.com", true));
+        this.userRepository.save(new User("john", "John Doe", "john@example.com", false));
+        this.userRepository.save(new User("jane", "Jane Doe", "jane@example.com", false));
     }
 
     private void initBooks() {

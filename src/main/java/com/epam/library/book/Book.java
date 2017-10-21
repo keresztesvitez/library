@@ -5,7 +5,7 @@ import com.epam.library.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Book {
@@ -21,7 +21,8 @@ public class Book {
     @OneToOne(mappedBy = "book")
     private Borrow borrow;
 
-    private List<User> subscribers;
+    @ManyToMany
+    private Set<User> subscribers;
 
     public Book() {
     }
@@ -64,11 +65,12 @@ public class Book {
         this.borrow = borrow;
     }
 
-    public List<User> getSubscribers() {
+    @JsonIgnore
+    public Set<User> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<User> subscribers) {
+    public void setSubscribers(Set<User> subscribers) {
         this.subscribers = subscribers;
     }
 }

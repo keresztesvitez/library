@@ -1,5 +1,6 @@
 package com.epam.library.user;
 
+import com.epam.library.book.Book;
 import com.epam.library.borrow.Borrow;
 
 import javax.persistence.*;
@@ -21,14 +22,18 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Borrow> borrows;
 
+    @ManyToMany(mappedBy = "subscribers")
+    private Set<Book> subscriptions;
+
     private Boolean isLibrarian;
 
     public User() {
     }
 
-    public User(String username, String name, Boolean isLibrarian) {
+    public User(String username, String name, String email, Boolean isLibrarian) {
         this.username = username;
         this.name = name;
+        this.email = email;
         this.isLibrarian = isLibrarian;
     }
 
@@ -78,5 +83,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Book> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<Book> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }

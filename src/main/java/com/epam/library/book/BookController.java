@@ -39,5 +39,8 @@ public class BookController {
         return bookService.deleteBorrow(request);
     }
 
-
+    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
+    public Boolean subscribe(@RequestBody BorrowRequest request) {
+        return bookService.subscribe(request);
+    }
 }

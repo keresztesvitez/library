@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookService {
@@ -69,7 +69,8 @@ public class BookService {
         Book book = bookRepository.findById(request.getBookId());
         Borrow borrow = borrowRepository.findByBook(book);
 
-        sendEmailToSubscribers(borrow.getBook().getSubscribers());
+        Set<User> subscribers = borrow.getBook().getSubscribers();
+        sendEmailToSubscribers(subscribers);
 
         borrowRepository.delete(borrow);
 
@@ -80,11 +81,17 @@ public class BookService {
 
         Book book = bookRepository.findById(request.getBookId());
 
+        Set<User> subscribers = book.getSubscribers();
+        User user = userRepository.findById(request.getUserId());
+        subscribers.add(user);
+
+        book.setSubscribers(subscribers);
+        bookRepository.save(book);
 
         return Boolean.TRUE;
     }
 
-    private void sendEmailToSubscribers(List<User> subscribers) {
+    private void sendEmailToSubscribers(Set<User> subscribers) {
         subscribers.stream().map(User::getEmail).forEach(this::sendEmail);
     }
 
