@@ -32,6 +32,8 @@ public class Borrow {
 
     private Boolean isExtended;
 
+    private Boolean isNotified;
+
     public long getId() {
         return id;
     }
@@ -77,4 +79,11 @@ public class Borrow {
         isExtended = extended;
     }
 
+    public Boolean getNotified() {
+        return isNotified;
+    }
+
+    public void setNotified(Boolean notified) {
+        isNotified = notified;
+    }
 }

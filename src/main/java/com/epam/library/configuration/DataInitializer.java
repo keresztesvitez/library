@@ -46,7 +46,8 @@ public class DataInitializer {
         borrow.setBook(book);
         borrow.setUser(user);
         borrow.setExtended(false);
-        borrow.setExpiration(LocalDate.now().plusDays(BORROW_DAYS));
+        borrow.setExpiration(LocalDate.now().minusDays(1));
+        borrow.setNotified(false);
 
         this.borrowRepository.save(borrow);
     }
