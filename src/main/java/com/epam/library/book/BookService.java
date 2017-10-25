@@ -3,6 +3,7 @@ package com.epam.library.book;
 import com.epam.library.borrow.Borrow;
 import com.epam.library.borrow.BorrowRepository;
 import com.epam.library.borrow.BorrowRequest;
+import com.epam.library.borrow.BorrowService;
 import com.epam.library.user.User;
 import com.epam.library.user.UserRepository;
 import org.slf4j.Logger;
@@ -24,14 +25,16 @@ public class BookService {
     private BorrowRepository borrowRepository;
     private UserRepository userRepository;
     private BookRepository bookRepository;
+    private BorrowService borrowService;
 
     private Logger logger = LoggerFactory.getLogger(BookService.class);
 
     @Autowired
-    public BookService(BorrowRepository borrowRepository, UserRepository userRepository, BookRepository bookRepository) {
+    public BookService(BorrowRepository borrowRepository, UserRepository userRepository, BookRepository bookRepository, BorrowService borrowService) {
         this.borrowRepository = borrowRepository;
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
+        this.borrowService = borrowService;
     }
 
     public Borrow borrow(Long bookId, Long userId) {
@@ -65,16 +68,8 @@ public class BookService {
         return borrows;
     }
 
-    public Boolean deleteBorrow(BorrowRequest request) {
-        Book book = bookRepository.findById(request.getBookId());
-        Borrow borrow = borrowRepository.findByBook(book);
-
-        Set<User> subscribers = borrow.getBook().getSubscribers();
-        sendEmailToSubscribers(subscribers);
-
-        borrowRepository.delete(borrow);
-
-        return Boolean.TRUE;
+    public void returnBook(BorrowRequest request) {
+        borrowService.returnBook(request);
     }
 
     public Boolean subscribe(BorrowRequest request) {
@@ -109,14 +104,6 @@ public class BookService {
 
     public void delete(Book book) {
         bookRepository.delete(book);
-    }
-
-    private void sendEmailToSubscribers(Set<User> subscribers) {
-        subscribers.stream().map(User::getEmail).forEach(this::sendEmail);
-    }
-
-    private void sendEmail(String email) {
-        logger.info("Send email to: {}", email);
     }
 
     private Borrow extendExpirationDate(Book book) {

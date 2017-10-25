@@ -12,9 +12,12 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "borrows", path = "borrows")
 public interface BorrowRepository extends PagingAndSortingRepository<Borrow, Long> {
+    
     Page<Borrow> findByUser(User user, Pageable pageable);
 
     Borrow findByBook(Book book);
 
     List<Borrow> findByExpirationLessThan(LocalDate date);
+
+    Borrow findById(Long id);
 }

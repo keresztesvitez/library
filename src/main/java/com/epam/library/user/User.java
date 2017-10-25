@@ -2,11 +2,17 @@ package com.epam.library.user;
 
 import com.epam.library.book.Book;
 import com.epam.library.borrow.Borrow;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@DynamicUpdate
+@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
     @Id
@@ -25,6 +31,7 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private Set<Borrow> borrows;
 
     @ManyToMany(mappedBy = "subscribers")

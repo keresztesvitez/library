@@ -2,12 +2,17 @@ package com.epam.library.book;
 
 import com.epam.library.borrow.Borrow;
 import com.epam.library.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@DynamicUpdate
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
 
     @Id
@@ -19,6 +24,7 @@ public class Book {
     private String author;
 
     @OneToOne(mappedBy = "book")
+    @JsonBackReference
     private Borrow borrow;
 
     @ManyToMany
@@ -56,7 +62,6 @@ public class Book {
         this.author = author;
     }
 
-    @JsonIgnore
     public Borrow getBorrow() {
         return borrow;
     }

@@ -3,16 +3,19 @@ package com.epam.library.borrow;
 import com.epam.library.book.Book;
 import com.epam.library.user.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@DynamicUpdate
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Borrow {
 
     @Id
@@ -20,9 +23,11 @@ public class Borrow {
     private long id;
 
     @OneToOne
+//    @JsonManagedReference
     private Book book;
 
     @ManyToOne
+//    @JsonManagedReference
     private User user;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -50,14 +55,13 @@ public class Borrow {
         this.book = book;
     }
 
-    @JsonIgnore
     public User getUser() {
         return user;
     }
 
-    public Long getUserId() {
-        return user.getId();
-    }
+//    public Long getUserId() {
+//        return user.getId();
+//    }
 
     public void setUser(User user) {
         this.user = user;

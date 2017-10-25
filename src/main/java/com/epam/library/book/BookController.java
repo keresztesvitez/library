@@ -39,9 +39,8 @@ public class BookController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public String deleteBook(@RequestBody Book book) {
+    public void deleteBook(@RequestBody Book book) {
         bookService.delete(book);
-        return "Book is deleted.";
     }
 
     @RequestMapping(value = "/borrow", method = RequestMethod.POST)
@@ -60,8 +59,8 @@ public class BookController {
     }
 
     @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
-    public Boolean bookReturned(@RequestBody BorrowRequest request) {
-        return bookService.deleteBorrow(request);
+    public void returnBook(@RequestBody BorrowRequest request) {
+        bookService.returnBook(request);
     }
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
