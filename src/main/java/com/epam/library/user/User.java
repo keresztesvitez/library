@@ -20,9 +20,6 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-//    @Column(name = "password_hash", nullable = false)
-//    private String passwordHash;
-
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -34,6 +31,7 @@ public class User {
     private Set<Book> subscriptions;
 
     private Boolean suspended;
+
     public User() {
     }
 
@@ -66,14 +64,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-//
-//    public String getPasswordHash() {
-//        return passwordHash;
-//    }
-//
-//    public void setPasswordHash(String passwordHash) {
-//        this.passwordHash = passwordHash;
-//    }
 
     public Role getRole() {
         return role;
