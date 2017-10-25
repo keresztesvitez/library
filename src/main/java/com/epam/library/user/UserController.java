@@ -13,11 +13,6 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-//    As a User I want to be able to suspend my account
-//    As a User I want to be able to modify my account data
-//    As a User I want to be able to see my account data
-//    As a User I want to be able to see what books do I have currently
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Page<User> getAll(Pageable pageable) {
         return userService.findAll(pageable);
@@ -42,8 +37,7 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public String delete(@RequestBody User user) {
+    public void delete(@RequestBody User user) {
         userService.delete(user);
-        return "User is deleted.";
     }
 }
