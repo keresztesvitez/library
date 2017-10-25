@@ -91,6 +91,26 @@ public class BookService {
         return Boolean.TRUE;
     }
 
+    public Page<Book> search(String searchText, Pageable pageable) {
+        return bookRepository.findBookByAuthorIgnoreCaseContainingOrTitleIgnoreCaseContaining(searchText, searchText, pageable);
+    }
+
+    public Page<Book> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
+    }
+
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id);
+    }
+
+    public Book create(Book book) {
+        return bookRepository.save(book);
+    }
+
+    public void delete(Book book) {
+        bookRepository.delete(book);
+    }
+
     private void sendEmailToSubscribers(Set<User> subscribers) {
         subscribers.stream().map(User::getEmail).forEach(this::sendEmail);
     }

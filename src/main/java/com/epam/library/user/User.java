@@ -11,13 +11,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
 
-    private String username;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
-    private String email;
+//    @Column(name = "password_hash", nullable = false)
+//    private String passwordHash;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private Set<Borrow> borrows;
@@ -25,56 +33,22 @@ public class User {
     @ManyToMany(mappedBy = "subscribers")
     private Set<Book> subscriptions;
 
-    private Boolean isLibrarian;
-
+    private Boolean suspended;
     public User() {
     }
 
-    public User(String username, String name, String email, Boolean isLibrarian) {
-        this.username = username;
+    public User(String name, String email, Role role) {
         this.name = name;
         this.email = email;
-        this.isLibrarian = isLibrarian;
+        this.role = role;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Borrow> getBorrows() {
-        return borrows;
-    }
-
-    public void setBorrows(Set<Borrow> borrows) {
-        this.borrows = borrows;
-    }
-
-    public Boolean getLibrarian() {
-        return isLibrarian;
-    }
-
-    public void setLibrarian(Boolean librarian) {
-        isLibrarian = librarian;
     }
 
     public String getEmail() {
@@ -85,11 +59,51 @@ public class User {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+//
+//    public String getPasswordHash() {
+//        return passwordHash;
+//    }
+//
+//    public void setPasswordHash(String passwordHash) {
+//        this.passwordHash = passwordHash;
+//    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Set<Borrow> getBorrows() {
+        return borrows;
+    }
+
+    public void setBorrows(Set<Borrow> borrows) {
+        this.borrows = borrows;
+    }
+
     public Set<Book> getSubscriptions() {
         return subscriptions;
     }
 
     public void setSubscriptions(Set<Book> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public Boolean getSuspended() {
+        return suspended;
+    }
+
+    public void setSuspended(Boolean suspended) {
+        this.suspended = suspended;
     }
 }

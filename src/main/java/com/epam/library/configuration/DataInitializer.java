@@ -4,6 +4,7 @@ import com.epam.library.book.Book;
 import com.epam.library.book.BookRepository;
 import com.epam.library.borrow.Borrow;
 import com.epam.library.borrow.BorrowRepository;
+import com.epam.library.user.Role;
 import com.epam.library.user.User;
 import com.epam.library.user.UserRepository;
 import org.slf4j.Logger;
@@ -53,9 +54,9 @@ public class DataInitializer {
     }
 
     private void initUsers() {
-        this.userRepository.save(new User("admin", "Larry Librarian", "admin@example.com", true));
-        this.userRepository.save(new User("john", "John Doe", "john@example.com", false));
-        this.userRepository.save(new User("jane", "Jane Doe", "jane@example.com", false));
+        this.userRepository.save(new User("Larry Librarian", "admin@example.com", Role.ADMIN));
+        this.userRepository.save(new User("John Doe", "john@example.com", Role.USER));
+        this.userRepository.save(new User("Jane Doe", "jane@example.com", Role.USER));
     }
 
     private void initBooks() {
