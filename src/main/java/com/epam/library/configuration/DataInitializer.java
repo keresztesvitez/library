@@ -54,9 +54,9 @@ public class DataInitializer {
     }
 
     private void initUsers() {
-        this.userRepository.save(new User("Larry Librarian", "admin@example.com", Role.ADMIN));
-        this.userRepository.save(new User("John Doe", "john@example.com", Role.USER));
-        this.userRepository.save(new User("Jane Doe", "jane@example.com", Role.USER));
+        this.userRepository.save(new User.UserBuilder().setName("Larry Librarian").setEmail("admin@example.com").setRole(Role.ADMIN).build());
+        this.userRepository.save(new User.UserBuilder().setName("John Doe").setEmail("john@example.com").setRole(Role.USER).build());
+        this.userRepository.save(new User.UserBuilder().setName("Jane Doe").setEmail("jane@example.com").setRole(Role.USER).build());
     }
 
     private void initBooks() {

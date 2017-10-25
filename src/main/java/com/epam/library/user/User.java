@@ -48,6 +48,12 @@ public class User {
         this.role = role;
     }
 
+    public User(UserBuilder builder) {
+        this.name = builder.name;
+        this.email = builder.email;
+        this.role = builder.role;
+    }
+
     public Long getId() {
         return id;
     }
@@ -102,5 +108,31 @@ public class User {
 
     public void setSuspended(Boolean suspended) {
         this.suspended = suspended;
+    }
+
+    public static class UserBuilder {
+
+        private String name;
+        private String email;
+        private Role role;
+
+        public UserBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder setRole(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }
