@@ -40,8 +40,12 @@ public class DataInitializer {
     }
 
     private void initBorrows() {
-        Book book = this.bookRepository.findById(1L);
-        User user = this.userRepository.findById(2L);
+        initBorrow(1L, 2L);
+        initBorrow(2L, 3L);
+    }
+    private void initBorrow(Long bookId, Long userId) {
+        Book book = this.bookRepository.findById(bookId);
+        User user = this.userRepository.findById(userId);
 
         Borrow borrow = new Borrow();
         borrow.setBook(book);
