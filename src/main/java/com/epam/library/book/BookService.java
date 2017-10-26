@@ -113,6 +113,7 @@ public class BookService {
     private Borrow extendExpirationDate(Book book) {
         Borrow borrow = book.getBorrow();
         borrow.setExtended(true);
+        borrow.setNotified(false);
         borrow.setExpiration(borrow.getExpiration().plusDays(BORROW_DAYS));
 
         borrowRepository.save(borrow);
