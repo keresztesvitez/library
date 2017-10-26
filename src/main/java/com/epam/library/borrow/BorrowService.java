@@ -87,6 +87,12 @@ public class BorrowService {
         delete(borrowRequest);
     }
 
+    public void delete(Long borrowId) {
+        BorrowDeleteRequest request = new BorrowDeleteRequest();
+        request.setId(borrowId);
+        delete(request);
+    }
+
     private void delete(BorrowRequest request) {
         Book book = bookRepository.findById(request.getBookId());
         Borrow borrow = borrowRepository.findByBook(book);

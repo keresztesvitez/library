@@ -20,6 +20,7 @@ public class Borrow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false, updatable = false)
     private long id;
 
     @OneToOne

@@ -5,6 +5,8 @@ import com.epam.library.borrow.BorrowRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +41,9 @@ public class BookController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteBook(@RequestBody Book book) {
+    public ResponseEntity<String> deleteBook(@RequestBody Book book) {
         bookService.delete(book);
+        return new ResponseEntity<String>("Book is deleted", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/borrow", method = RequestMethod.POST)
@@ -59,13 +62,15 @@ public class BookController {
     }
 
     @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
-    public void returnBook(@RequestBody BorrowRequest request) {
+    public ResponseEntity<String> returnBook(@RequestBody BorrowRequest request) {
         bookService.returnBook(request);
+        return new ResponseEntity<String>("You have returned to the book.", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
-    public Boolean subscribe(@RequestBody BorrowRequest request) {
-        return bookService.subscribe(request);
+    public ResponseEntity<String> subscribe(@RequestBody BorrowRequest request) {
+        bookService.subscribe(request);
+        return new ResponseEntity<String>("You have subscribed to the book.", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search/{searchText}", method = RequestMethod.GET)

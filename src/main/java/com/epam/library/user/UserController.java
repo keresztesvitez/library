@@ -3,6 +3,8 @@ package com.epam.library.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,8 @@ public class UserController {
     
     @Autowired
     private UserService userService;
-    
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public Page<User> getAll(Pageable pageable) {
         return userService.findAll(pageable);
@@ -37,7 +40,8 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void delete(@RequestBody User user) {
+    public ResponseEntity<String> delete(@RequestBody User user) {
         userService.delete(user);
+        return new ResponseEntity<String>("You have deleted the user.", HttpStatus.OK);
     }
 }

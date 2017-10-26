@@ -11,7 +11,7 @@ public class TaskScheduler {
     @Autowired
     private BorrowService borrowService;
 
-    @Scheduled(fixedRate = 15000)
+    @Scheduled(fixedRate = 60000)
     public void notifyExceededBorrows() {
         borrowService.notifyExceededBorrows();
     }

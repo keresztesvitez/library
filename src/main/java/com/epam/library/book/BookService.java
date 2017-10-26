@@ -103,6 +103,10 @@ public class BookService {
     }
 
     public void delete(Book book) {
+        book = bookRepository.findById(book.getId());
+        if (book.getBorrow() != null) {
+            borrowService.delete(book.getBorrow().getId());
+        }
         bookRepository.delete(book);
     }
 
