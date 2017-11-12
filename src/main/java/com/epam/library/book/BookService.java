@@ -72,8 +72,7 @@ public class BookService {
         borrowService.returnBook(request);
     }
 
-    public Boolean subscribe(BorrowRequest request) {
-
+    public void subscribe(BorrowRequest request) {
         Book book = bookRepository.findById(request.getBookId());
 
         Set<User> subscribers = book.getSubscribers();
@@ -82,8 +81,6 @@ public class BookService {
 
         book.setSubscribers(subscribers);
         bookRepository.save(book);
-
-        return Boolean.TRUE;
     }
 
     public Page<Book> search(String searchText, Pageable pageable) {

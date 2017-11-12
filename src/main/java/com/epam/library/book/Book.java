@@ -28,7 +28,7 @@ public class Book {
     @JsonBackReference
     private Borrow borrow;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<User> subscribers;
 
     public Book() {

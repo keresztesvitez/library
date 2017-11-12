@@ -97,7 +97,7 @@ public class BorrowService {
         Book book = bookRepository.findById(request.getBookId());
         Borrow borrow = borrowRepository.findByBook(book);
 
-        Set<User> subscribers = borrow.getBook().getSubscribers();
+        Set<User> subscribers = book.getSubscribers();
         sendEmailToSubscribers(subscribers);
 
         borrowRepository.delete(borrow);
